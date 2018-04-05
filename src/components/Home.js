@@ -4,10 +4,10 @@ import {
   StyleSheet,
   FlatList,
   View,
-  Text,
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
+import { ListItem, SearchBar } from 'react-native-elements';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -25,23 +25,24 @@ const styles = StyleSheet.create({
   row: {
     borderBottomWidth: 1,
     borderColor: '#ccc',
-    padding: 10,
+    backgroundColor: '#FFF',
+    padding: 12,
   },
 
   title: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
-  },
-
-  description: {
-    marginTop: 5,
-    fontSize: 14,
   },
 });
 
 class Home extends Component {
   static navigationOptions = {
     title: 'Select a Hymn',
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = { searchText: '' };
   }
 
   componentDidMount() {
@@ -55,23 +56,33 @@ class Home extends Component {
   }
 
   renderItem = ({ item }) => (
-    <View style={styles.row}>
-      <TouchableOpacity onPress={() => this.selectHymn(item)}>
-        <Text style={styles.title}>{item.title}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={() => this.selectHymn(item)}>
+      <ListItem
+        title={item.title}
+      />
+    </TouchableOpacity>
   );
 
   render() {
+    const filteredData = this.props.data.filter(hymn =>
+      hymn.title.toLowerCase().includes(this.state.searchText.toLowerCase()));
     return this.props.loading ? (
       <View style={styles.activityIndicatorContainer}>
         <ActivityIndicator animating />
       </View>
     ) : (
-      <View style={{ flex: 1, backgroundColor: '#F5F5F5', paddingTop: 20 }}>
+      <View>
+        <SearchBar
+          lightTheme
+          autocorrect={false}
+          onChangeText={searchText => this.setState({ searchText })}
+          onClear={() => this.setState({ searchText: '' })}
+          value={this.state.searchText}
+          clearIcon={{ name: 'clear' }}
+          placeholder="Search Hymn..."
+        />
         <FlatList
-          ref={(c) => { this.listRef = c; }}
-          data={this.props.data}
+          data={filteredData}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index}
         />

@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 
 import * as Actions from '../actions';
 
+import { moderateScale } from '../helper/utils';
+
 const styles = StyleSheet.create({
   activityIndicatorContainer: {
     backgroundColor: '#fff',
@@ -21,7 +23,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
-
+  container: {
+    flex: 1,
+  },
   row: {
     borderBottomWidth: 1,
     borderColor: '#ccc',
@@ -30,7 +34,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 16,
+    fontSize: moderateScale(11),
     fontWeight: '600',
   },
 });
@@ -59,6 +63,7 @@ class Home extends Component {
     <TouchableOpacity onPress={() => this.selectHymn(item)}>
       <ListItem
         title={item.title}
+        titleStyle={styles.title}
       />
     </TouchableOpacity>
   );
@@ -71,7 +76,7 @@ class Home extends Component {
         <ActivityIndicator animating />
       </View>
     ) : (
-      <View>
+      <View style={styles.container}>
         <SearchBar
           lightTheme
           autocorrect={false}

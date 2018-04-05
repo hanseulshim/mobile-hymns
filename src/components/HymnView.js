@@ -25,14 +25,13 @@ class HymnView extends Component {
 }
 
 const mapStateToProps = state => ({
-  title: state.hymnReducer.title,
   lyrics: state.hymnReducer.lyrics,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(Actions, dispatch);
 
 HymnView.propTypes = {
-  navigation: PropTypes.shape({ setParams: PropTypes.func }).isRequired,
+  lyrics: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HymnView);

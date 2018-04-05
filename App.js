@@ -5,20 +5,25 @@ import Home from './src/components/Home';
 import HymnView from './src/components/HymnView';
 import store from './src/store';
 
-const SimpleApp = StackNavigator({
-  Home: {
-    screen: Home,
+const SimpleApp = StackNavigator(
+  {
+    Home: { screen: Home },
+    HymnView: { screen: HymnView },
+  },
+  {
+    initialRouteName: 'Home',
     navigationOptions: {
-      title: 'Select a Hymn',
+      headerStyle: {
+        backgroundColor: '#59c139',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     },
   },
-  HymnView: {
-    screen: HymnView,
-    navigationOptions: {
-      title: 'jFeed',
-    },
-  },
-});
+);
+
 
 export default () => (
   <Provider store={store}>

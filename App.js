@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Home from './src/components/Home';
 import HymnView from './src/components/HymnView';
 import store from './src/store';
+import { moderateScale } from './src/helper/utils';
 
 const SimpleApp = StackNavigator(
   {
@@ -13,12 +14,16 @@ const SimpleApp = StackNavigator(
   {
     initialRouteName: 'Home',
     navigationOptions: {
+      headerBackTitle: 'Back',
       headerStyle: {
         backgroundColor: '#59c139',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: 'bold',
+        fontSize: moderateScale(13),
+      },
+      headerBackTitleStyle: {
+        fontSize: moderateScale(11),
       },
     },
   },
